@@ -22,7 +22,7 @@ export default function Avatar() {
       new THREE.MeshBasicMaterial({
         color: new THREE.Color("#00bbff"),
         transparent: true,
-        opacity: 0.1,
+        opacity: 0.6,
       }),
     []
   );
@@ -42,8 +42,18 @@ export default function Avatar() {
       new THREE.MeshBasicMaterial({
         color: new THREE.Color("#00d4ff"),
         transparent: true,
-        opacity: 0.15,
+        opacity: 0.35,
         side: THREE.DoubleSide,
+      }),
+    []
+  );
+
+  const torusMat = useMemo(
+    () =>
+      new THREE.MeshBasicMaterial({
+        color: new THREE.Color("#00d4ff"),
+        transparent: true,
+        opacity: 0.4,
       }),
     []
   );
@@ -51,10 +61,10 @@ export default function Avatar() {
   useFrame((state) => {
     const t = state.clock.elapsedTime;
     if (groupRef.current) {
-      const breathe = Math.sin(t * 1.2) * 0.012;
-      groupRef.current.scale.set(1 + breathe * 0.5, 1 + breathe, 1 + breathe * 0.5);
-      groupRef.current.rotation.y = Math.sin(t * 0.3) * 0.05;
-      groupRef.current.position.y = -0.3 + Math.sin(t * 0.8) * 0.03;
+      const breathe = Math.sin(t * 1.2) * 0.005;
+      groupRef.current.scale.set(1 + breathe * 0.2, 1 + breathe, 1 + breathe * 0.2);
+      groupRef.current.rotation.y = Math.sin(t * 0.2) * 0.03;
+      groupRef.current.position.y = -0.3 + Math.sin(t * 0.5) * 0.02;
     }
   });
 
@@ -110,9 +120,8 @@ export default function Avatar() {
       </mesh>
 
       {/* Base torus */}
-      <mesh position={[0, -0.15, 0]} rotation={[-Math.PI / 2, 0, 0]}>
+      <mesh position={[0, -0.15, 0]} rotation={[-Math.PI / 2, 0, 0]} material={torusMat}>
         <torusGeometry args={[0.65, 0.006, 8, 32]} />
-        <meshBasicMaterial color="#00d4ff" transparent opacity={0.4} />
       </mesh>
 
       {/* Scan line */}
