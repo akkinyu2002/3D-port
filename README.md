@@ -1,4 +1,4 @@
-# Den Days Portfolio
+# Dev Days Portfolio
 
 A futuristic 3D portfolio for Aakash Neupane built with React, Vite, Three.js, and React Three Fiber.
 
