@@ -1,6 +1,5 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import { useFrame } from "@react-three/fiber";
-import { Text } from "@react-three/drei/core/Text";
 import { portfolioData } from "../data/portfolioData";
 
 export default function SkillsRing({ visible }) {
@@ -107,27 +106,15 @@ function SkillNode({ skill, position, index }) {
         <meshBasicMaterial color={hovered ? "#7b61ff" : "#00d4ff"} />
       </mesh>
 
-      <Text position={[0, 0.22, 0]} fontSize={0.16} anchorX="center" anchorY="middle">
-        {skill.icon}
-      </Text>
-
-      <Text
-        position={[0, -0.18, 0]}
-        fontSize={0.07}
-        color={hovered ? "#7b61ff" : "#00d4ff"}
-        anchorX="center"
-        anchorY="top"
-      >
-        {skill.name}
-      </Text>
-
+      {/* Skill label box */}
       <mesh position={[0, -0.3, 0]}>
         <boxGeometry args={[0.3, 0.02, 0.005]} />
         <meshBasicMaterial color="#1a1a3e" transparent opacity={0.5} />
       </mesh>
 
+      {/* Skill level bar */}
       <mesh position={[-(0.3 - skill.level * 0.003) / 2, -0.3, 0.003]}>
-        <boxGeometry args={[skill.level * 0.003, 0.02, 0.005]} />
+        <boxGeometry args={[Math.max(skill.level * 0.003, 0.01), 0.02, 0.005]} />
         <meshBasicMaterial color={hovered ? "#7b61ff" : "#00d4ff"} />
       </mesh>
     </group>
