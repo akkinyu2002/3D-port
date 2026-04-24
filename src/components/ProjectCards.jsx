@@ -1,7 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import { useFrame } from "@react-three/fiber";
 import { RoundedBox } from "@react-three/drei/core/RoundedBox";
-import { Text } from "@react-three/drei/core/Text";
 import { portfolioData } from "../data/portfolioData";
 
 export default function ProjectCards({ visible, onSelectProject }) {
@@ -96,39 +95,19 @@ function ProjectCard({ project, position, rotation, index, onSelect }) {
         />
       </mesh>
 
-      <Text
-        position={[-0.5, 0.28, 0.02]}
-        fontSize={0.07}
-        color={project.color}
-        anchorX="left"
-        anchorY="middle"
-      >
-        {`PROJECT 0${project.id}`}
-      </Text>
+      {/* Project color indicator */}
+      <mesh position={[0.5, 0.3, 0.02]}>
+        <sphereGeometry args={[0.08, 12, 12]} />
+        <meshBasicMaterial color={project.color} />
+      </mesh>
 
-      <Text
-        position={[-0.5, 0.12, 0.02]}
-        fontSize={0.1}
-        color="#f0f0f5"
-        anchorX="left"
-        anchorY="middle"
-        maxWidth={1.2}
-      >
-        {project.title}
-      </Text>
+      {/* Project label bar */}
+      <mesh position={[0, 0.12, 0.015]}>
+        <boxGeometry args={[0.8, 0.04, 0.005]} />
+        <meshBasicMaterial color={project.color} transparent opacity={0.3} />
+      </mesh>
 
-      <Text
-        position={[-0.5, -0.08, 0.02]}
-        fontSize={0.055}
-        color="#8888aa"
-        anchorX="left"
-        anchorY="top"
-        maxWidth={1.2}
-        lineHeight={1.4}
-      >
-        {project.description}
-      </Text>
-
+      {/* Bottom accent bar */}
       <mesh position={[0, -0.4, 0.015]}>
         <boxGeometry args={[hovered ? 1.3 : 0.6, 0.008, 0.001]} />
         <meshBasicMaterial color={project.color} />
