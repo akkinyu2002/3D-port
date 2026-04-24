@@ -73,6 +73,9 @@ const MainScene = forwardRef(function MainScene(
       {/* Skills ring */}
       <SkillsRing visible={activeSection === "skills" || activeSection === "home"} />
 
+      {/* Project cards */}
+      <ProjectCards visible={activeSection === "projects"} onSelectProject={onSelectProject} />
+
       {/* Ground grid */}
       <gridHelper args={[20, 40, "#0a2a4a", "#061428"]} position={[0, -0.5, 0]} />
     </>
