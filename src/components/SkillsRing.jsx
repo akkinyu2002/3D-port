@@ -1,6 +1,29 @@
 import { useEffect, useMemo, useRef, useState } from "react";
-import { useFrame } from "@react-three/fiber";
+import { useFrame, useThree } from "@react-three/fiber";
+import * as THREE from "three";
 import { portfolioData } from "../data/portfolioData";
+
+// Helper function to create canvas texture with text
+function createTextTexture(text, fontSize = 24, color = "#00d4ff") {
+  const canvas = document.createElement("canvas");
+  canvas.width = 256;
+  canvas.height = 128;
+  const context = canvas.getContext("2d");
+
+  context.fillStyle = "#00000000";
+  context.fillRect(0, 0, canvas.width, canvas.height);
+
+  context.fillStyle = color;
+  context.font = `bold ${fontSize}px Arial`;
+  context.textAlign = "center";
+  context.textBaseline = "middle";
+  context.fillText(text, canvas.width / 2, canvas.height / 2);
+
+  const texture = new THREE.CanvasTexture(canvas);
+  texture.magFilter = THREE.LinearFilter;
+  texture.minFilter = THREE.LinearFilter;
+  return texture;
+}
 
 export default function SkillsRing({ visible }) {
   const groupRef = useRef();
@@ -104,6 +127,36 @@ function SkillNode({ skill, position, index }) {
       <mesh>
         <sphereGeometry args={[0.06, 12, 12]} />
         <meshBasicMaterial color={hovered ? "#7b61ff" : "#00d4ff"} />
+      </mesh>
+
+      {/* Skill icon background */}
+      <mesh position={[0, 0.02, 0.08]}>
+        <planeGeometry args={[0.18, 0.18]} />
+        <meshBasicMaterial
+          map={createTextTexture(skill.icon, 32)}
+          transparent
+          side={THREE.DoubleSide}
+        />
+      </mesh>
+
+      {/* Skill name label */}
+      <mesh position={[0, -0.25, 0.08]}>
+        <planeGeometry args={[0.5, 0.1]} />
+        <meshBasicMaterial
+          map={createTextTexture(skill.name, 16, "#00d4ff")}
+          transparent
+          side={THREE.DoubleSide}
+        />
+      </mesh>
+
+      {/* Skill level text */}
+      <mesh position={[0, -0.35, 0.08]}>
+        <planeGeometry args={[0.25, 0.08]} />
+        <meshBasicMaterial
+          map={createTextTexture(`${skill.level}%`, 14, "#7b61ff")}
+          transparent
+          side={THREE.DoubleSide}
+        />
       </mesh>
 
       {/* Skill label box */}
