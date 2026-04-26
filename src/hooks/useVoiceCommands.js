@@ -96,7 +96,7 @@ export function useVoiceCommands(onCommand) {
   }, [parseCommand, supported]);
 
   const startListening = useCallback(() => {
-    if (!recognitionRef.current || isListening) {
+    if (!recognitionRef.current) {
       return;
     }
 
@@ -108,10 +108,10 @@ export function useVoiceCommands(onCommand) {
     } catch {
       setIsListening(false);
     }
-  }, [isListening]);
+  }, []);
 
   const stopListening = useCallback(() => {
-    if (!recognitionRef.current || !isListening) {
+    if (!recognitionRef.current) {
       return;
     }
 
@@ -120,7 +120,7 @@ export function useVoiceCommands(onCommand) {
     } finally {
       setIsListening(false);
     }
-  }, [isListening]);
+  }, []);
 
   return {
     isListening,
